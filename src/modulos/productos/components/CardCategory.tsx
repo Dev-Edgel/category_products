@@ -1,33 +1,77 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, ImageList, ImageListItem, Typography } from "@mui/material"
 import { CategoyType } from "../types/productoTypes"
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface CardCategoryProps {
   category: CategoyType;
 }
 
+type Producto = {
+  id: number;
+  thumbnail: string;
+  title: string;
+};
+
+type ProductoAPI = {
+  id: number;
+  thumbnail: string;
+  title: string;
+};
+
 const CardCategory = ({ category }: CardCategoryProps) => {
   const router = useRouter();
 
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!category.slug) return;
+    setLoading(true);
+    fetch(`https://dummyjson.com/products/category/${category.slug}`)
+      .then((res) => res.json())
+      .then((datos) => {
+        const productosFiltrados: Producto[] = datos.products.map((p: ProductoAPI) => ({
+          id: p.id,
+          thumbnail: p.thumbnail,
+          title: p.title,
+        }));
+        setProductos(productosFiltrados);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => setLoading(false));
+  }, [category.slug]);
+
   return (
-    <Card sx={{ maxWidth: 400 }}>
+    <Card sx={{ maxWidth: 420 }}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom 
+            variant="h5"
+            component="div"
+            onClick={() => {
+              router.push(`/categories/${category.slug}`);
+            }}
+          >
             {category.name}
           </Typography>
         </CardContent>
-        <ImageList sx={{ width: 400, height: 400 }} cols={3} rowHeight={164}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                alt={item.title}
-                loading="lazy"
-              />
+        <ImageList
+          sx={{ width: 350, height: 490, paddingLeft: "10px" }}
+          cols={2} rowHeight={164}
+          onClick={() => {
+            router.push(`/categories/${category.slug}`);
+          }}
+        >
+          {loading && <Typography>Cargando imagen...</Typography>}
+          {productos.slice(0, 4).map((producto) => (
+            <ImageListItem key={producto.id}>
+              <img src={producto.thumbnail} alt={producto.title} loading="lazy" />
               <Typography gutterBottom component="div">
-                {category.name}
+                {producto.title}
               </Typography>
             </ImageListItem>
           ))}
@@ -49,46 +93,3 @@ const CardCategory = ({ category }: CardCategoryProps) => {
 }
 
 export default CardCategory
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-];
