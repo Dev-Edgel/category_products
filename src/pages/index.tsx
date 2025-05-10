@@ -42,7 +42,7 @@ export default function Home() {
         <Grid
           container spacing={2}
           columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
-          sx={{ mt: -30, position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center' }}
+          sx={{ mt: {xs: -5, md: -20, lg:-30}, position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center' }}
         >
             {categories.map((category) => (
               <Grid key={category.slug} size={{ xs: 4, sm: 4, md: 4, lg: 4 }}>

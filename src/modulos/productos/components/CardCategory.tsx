@@ -53,7 +53,7 @@ const CardCategory = ({ category }: CardCategoryProps) => {
             variant="h5"
             component="div"
             onClick={() => {
-              router.push(`/categories/${category.slug}`);
+              router.push(`/productos/categoria/${category.slug}`);
             }}
           >
             {category.name}
@@ -63,7 +63,7 @@ const CardCategory = ({ category }: CardCategoryProps) => {
           sx={{ width: 350, height: 450, paddingLeft: "10px" }}
           cols={2} rowHeight={164}
           onClick={() => {
-            router.push(`/categories/${category.slug}`);
+            router.push(`/productos/categoria/${category.slug}`);
           }}
         >
           {loading &&
@@ -95,7 +95,7 @@ const CardCategory = ({ category }: CardCategoryProps) => {
           size="medium"
           color="primary"
           onClick={() => {
-            router.push(`/categories/${category.slug}`);
+            router.push(`/productos/categoria/${category.slug}`);
           }}
         >
           See {category.name}
