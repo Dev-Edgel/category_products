@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import CartProvider from "@/modulos/compras/context/CartProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -10,7 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <CartProvider>
         <CssBaseline />
-        <Component {...pageProps} />
+        <Box sx={{ backgroundColor: '#d3d3d3', minHeight: '100vh' }}>
+          <Component {...pageProps} />
+        </Box>
       </CartProvider>
     </>
   );

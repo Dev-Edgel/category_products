@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Slider from "react-slick";
+import image0 from "../../../images/imagen0.jpg";
 import image1 from "../../../images/imagen2.jpg";
 import image2 from "../../../images/imagen3.jpg";
 import image3 from "../../../images/imagen1.jpg";
@@ -7,7 +8,8 @@ import image4 from "../../../images/imagen4.jpg";
 import { Box, Typography } from "@mui/material";
 
 const slides = [
-  { src: image1, title: "New arrivals in Toys" },
+  { src: image0, title: "New arrivals in Toys" },
+  { src: image1, title: "News in cameras" },
   { src: image2, title: "New Electronics Just In" },
   { src: image3, title: "New Fashion Arrivals" },
   { src: image4, title: "New Computers & Laptops" },

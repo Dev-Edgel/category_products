@@ -1,6 +1,7 @@
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Rating, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, IconButton, Rating, Tooltip, Typography } from "@mui/material";
 import { ProductoType } from "../types/productoTypes";
 import { Info } from "@mui/icons-material";
+import SpaIcon from '@mui/icons-material/Spa';
 
 interface CardProductoProps {
   producto: ProductoType;
@@ -48,7 +49,12 @@ const CardProducto = ({
             }}
             // endIcon={<HomeRepairServiceOutlined />}
           >
-            {producto.title} <Info color="primary" />
+            {producto.title}
+            <Tooltip arrow title={producto.availabilityStatus} placement="top">
+              <IconButton>
+                <Info />
+              </IconButton>
+            </Tooltip>
           </Typography>
           <Typography 
             variant="h6"
@@ -71,14 +77,20 @@ const CardProducto = ({
 
           <Typography gutterBottom variant="body2" color="text.secondary">
             {producto.shippingInformation}
+          </Typography>          
+          <Typography gutterBottom variant="h4" fontWeight={"bold"}>
+            <Typography component="sup" variant="body2" sx={{ verticalAlign: 'super', fontSize: '1.2rem' }}>
+              $
+            </Typography>
+            {producto.price}
           </Typography>
           <Typography gutterBottom variant="body2" color="info">
             {producto.brand}
           </Typography>
-          <Typography gutterBottom variant="h4" fontWeight={"bold"}>
-            ${producto.price}
-          </Typography>
           <Typography gutterBottom variant="body2" color="text.secondary">
+            <IconButton>
+              <SpaIcon color="success" />
+            </IconButton>
             {producto.warrantyInformation}
           </Typography>
           <Button 

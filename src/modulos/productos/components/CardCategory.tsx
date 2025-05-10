@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, ImageList, ImageListItem, Typography } from "@mui/material"
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, ImageList, ImageListItem, Typography } from "@mui/material"
 import { CategoyType } from "../types/productoTypes"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -60,16 +60,29 @@ const CardCategory = ({ category }: CardCategoryProps) => {
           </Typography>
         </CardContent>
         <ImageList
-          sx={{ width: 350, height: 490, paddingLeft: "10px" }}
+          sx={{ width: 350, height: 450, paddingLeft: "10px" }}
           cols={2} rowHeight={164}
           onClick={() => {
             router.push(`/categories/${category.slug}`);
           }}
         >
-          {loading && <Typography>Cargando imagen...</Typography>}
+          {loading &&
+            <Box
+              display="flex"
+              justifyContent="center"
+            >
+              <Typography variant="h6" marginRight={2}>Loading...</Typography>
+            </Box>
+          }
           {productos.slice(0, 4).map((producto) => (
             <ImageListItem key={producto.id}>
-              <img src={producto.thumbnail} alt={producto.title} loading="lazy" />
+              <CardMedia
+                component="img"
+                image={producto.thumbnail}
+                alt={producto.title}
+                height="150"
+                sx={{ objectFit: 'cover' }}
+              />
               <Typography gutterBottom component="div">
                 {producto.title}
               </Typography>
@@ -79,7 +92,7 @@ const CardCategory = ({ category }: CardCategoryProps) => {
       </CardActionArea>
       <CardActions>
         <Button
-          size="small"
+          size="medium"
           color="primary"
           onClick={() => {
             router.push(`/categories/${category.slug}`);

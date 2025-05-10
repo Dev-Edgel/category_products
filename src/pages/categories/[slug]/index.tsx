@@ -2,7 +2,7 @@ import MainLayout from "@/common/components/MainLayout";
 import { useCart } from "@/modulos/compras/context/CartProvider";
 import CardProducto from "@/modulos/productos/components/CardProducto";
 import { ProductoType } from "@/modulos/productos/types/productoTypes";
-import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Pagination, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -49,15 +49,24 @@ const CategoryDetalle = () => {
   return (
     <MainLayout titulo="Productos">
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6" fontWeight={"bold"}>
+        <Typography variant="h4" fontWeight={"bold"}>
           Results
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           Ckeck each product page for other buying options. Price and other details may vary based on product size and color.
         </Typography>
       </Box>
       <Stack spacing={2}>
-        {loading && <Typography>Cargando productos...</Typography>}
+        {loading &&
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress size={50} />
+            <Typography variant="h5" marginRight={2}>Loading...</Typography>
+          </Box>
+        }
         <Grid
           container spacing={2}
           columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
@@ -65,7 +74,7 @@ const CategoryDetalle = () => {
           sx={{ marginTop: "50px" }}
         >
           {productos.map((producto) => (
-            <Grid key={producto.id} xs={1}>
+            <Grid key={producto.id} size={{ xs: 1 }}>
                 <CardProducto
                   producto={producto}
                   agregarProducto={() => {

@@ -1,5 +1,5 @@
 import Carrucel from "@/modulos/productos/components/Carrucel";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import CardCategory from "@/modulos/productos/components/CardCategory";
 import { useEffect, useState } from "react";
 import { CategoyType } from "@/modulos/productos/types/productoTypes";
@@ -29,7 +29,16 @@ export default function Home() {
     <MainLayout titulo="Categories">
       <Box>
         <Carrucel />
-        {loading && <Typography>Cargando productos...</Typography>}
+        {loading &&
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress size={50} />
+            <Typography variant="h5" marginRight={2}>Loading...</Typography>
+          </Box>
+        }
         <Grid
           container spacing={2}
           columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
@@ -42,6 +51,7 @@ export default function Home() {
             ))}
         </Grid>
       </Box>
+      <Box height={"100px"} />
     </MainLayout>
   );
 }

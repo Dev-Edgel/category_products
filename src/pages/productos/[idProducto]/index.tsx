@@ -1,7 +1,7 @@
 import MainLayout from "@/common/components/MainLayout";
 import { useCart } from "@/modulos/compras/context/CartProvider";
 import { ProductoType } from "@/modulos/productos/types/productoTypes";
-import { Box, Button, Card, CardContent, CardMedia, Divider, Grid, MenuItem, Rating, Select, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Divider, Grid, MenuItem, Rating, Select, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -27,10 +27,33 @@ const DetailProduct = () => {
 
   return (
     <MainLayout titulo="Detalle del Producto">
-      {loading && <Typography>Obteniendo producto . . .</Typography>}
+      {loading && 
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress size={50} />
+          <Typography variant="h5" marginRight={2}>Loading...</Typography>
+        </Box>
+      }
       {producto && (
         <Grid container>
-          <Grid size={1}>i</Grid>
+          <Grid size={1}>
+            {producto.images.map((imgUrl, index) => (
+              <Grid size={12} key={index}>
+                <Card sx={{ boxShadow: 3, borderRadius: 2, marginBottom: 1 }}>
+                  <CardMedia
+                    component="img"
+                    image={imgUrl}
+                    alt={`Producto ${index}`}
+                    height="150"
+                    sx={{ objectFit: 'cover' }}
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
           <Grid size={3}>
             <CardMedia
               component="img"
@@ -43,8 +66,11 @@ const DetailProduct = () => {
           </Grid>
           <Grid size={6}>
             <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant="h3" component="div" color="primary">
+                {producto.title}
+              </Typography>
               <Typography gutterBottom variant="h5" component="div">
-                {producto.title} - {producto.description}
+                {producto.description}
               </Typography>
               <Box display={"flex"} gap={1}>
                 <Rating
@@ -60,13 +86,16 @@ const DetailProduct = () => {
               </Box>
               <Typography gutterBottom variant="body2" color="text.secondary">
                 {producto.shippingInformation}
+              </Typography>              
+              <Divider />
+              <Typography gutterBottom variant="h4" fontWeight={"bold"}>
+                <Typography component="sup" variant="body2" sx={{ verticalAlign: 'super', fontSize: '1.5rem' }}>
+                  $
+                </Typography>
+                {producto.price}
               </Typography>
               <Typography gutterBottom variant="body2" color="info">
                 {producto.brand}
-              </Typography>
-              <Divider />
-              <Typography gutterBottom variant="h4" fontWeight={"bold"}>
-                ${producto.price}
               </Typography>
               <Typography gutterBottom variant="body2" color="text.secondary">
                 {producto.warrantyInformation}
