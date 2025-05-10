@@ -6,7 +6,7 @@ import { Box, CircularProgress, Grid, Pagination, Stack, Typography } from "@mui
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const DEFAULT_LIMIT = 5;
+const DEFAULT_LIMIT = 10;
 const DEFAULT_PAGE = 1;
 
 const getSkip = (page: number) => (page - 1) * DEFAULT_LIMIT;
